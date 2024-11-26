@@ -98,9 +98,6 @@ function submitForm(event) {
         alert('No form found to submit!');
     }
 }
-
-
-
 document.getElementById('Phone').addEventListener('input', function (event) {
     const input = event.target.value;
     const isValid = /^\d{0,10}$/.test(input); // Only allow up to 10 digits
