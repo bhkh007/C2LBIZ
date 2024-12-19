@@ -1,19 +1,19 @@
+
 function addRow() {
     const table = document.getElementById('addressTable').getElementsByTagName('tbody')[0];
     const newRow = table.rows[0].cloneNode(true);
     
-    // Clear inputs in the new row
+    
     newRow.querySelectorAll('input').forEach(input => {
         input.value = '';
         if (input.type === 'checkbox') input.checked = false;
     });
     
-    // Set Delete button for the Delete column
-    const deleteCell = newRow.cells[newRow.cells.length - 2];
-    deleteCell.innerHTML = '<button type="button" onclick="deleteRow(this)">Delete</button>';
+    const deleteCell = newRow.cells[0];
+    deleteCell.innerHTML = '<input type="checkbox" onclick="deleteRow(this)">'; 
     
-    // Set Add button for the Action column
-    const actionCell = newRow.cells[newRow.cells.length - 1];
+
+    const actionCell = newRow.cells[1];
     actionCell.innerHTML = '<button type="button" onclick="addRow()">Add</button>';
     
     table.appendChild(newRow);
@@ -45,45 +45,45 @@ document.getElementById("lastLogin").textContent = `Last Login Date: ${formatted
 
 
 
-// Function to "Save" the form (simulated save logic)
+
 function saveForm() {
-    const form = document.querySelector('form'); // Find the form
+    const form = document.querySelector('form'); 
     if (form) {
-        // For demonstration purposes, we'll log the form data
+        
         alert('Form data saved!');
         const formData = new FormData(form);
         formData.forEach((value, key) => {
-            console.log(key + ": " + value);  // Log form data to the console
+            console.log(key + ": " + value);  
         });
-        // Here you can perform actual saving (e.g., store in local storage, send to API)
+       
     } else {
         alert('No form found to save!');
     }
 }
 
-// Function to "Reset" the form (clear all input fields)
+
 function resetForm() {
-    const form = document.querySelector('form'); // Find the form
+    const form = document.querySelector('form');
     if (form) {
-        form.reset();  // Resets all form fields to their default values
+        form.reset(); 
         alert('Form reset successfully!');
     } else {
         alert('No form found to reset!');
     }
 }
 
-// Function to "Submit" the form (submit logic)
+
 function submitForm(event) {
-    event.preventDefault();  // Prevent default form submission (to handle manually)
+    event.preventDefault(); 
     
-    const form = document.querySelector('form'); // Find the form
+    const form = document.querySelector('form'); 
     if (form) {
-        // Add custom validation logic here, if needed
+        
         const formData = new FormData(form);
         let isValid = true;
         formData.forEach((value, key) => {
-            // Example of simple validation: check if any required field is empty
-            if (!value && key !== 'nriYes' && key !== 'nriNo') { // Check if it's not NRI radio
+            
+            if (!value && key !== 'nriYes' && key !== 'nriNo') {
                 alert('Please fill in all fields!');
                 isValid = false;
                 return;
@@ -92,31 +92,140 @@ function submitForm(event) {
 
         if (isValid) {
             alert('Form submitted successfully!');
-            form.submit();  // This would trigger the actual form submission
+            form.submit();  
         }
     } else {
         alert('No form found to submit!');
     }
 }
 
-
-
-document.getElementById('Phone').addEventListener('input', function (event) {
+document.getElementById('mobileNumber').addEventListener('input', function (event) {
     const input = event.target.value;
-    const isValid = /^\d{0,10}$/.test(input); // Only allow up to 10 digits
+    const isValid = /^\d{0,10}$/.test(input); 
     if (!isValid) {
-      event.target.value = input.slice(0, -1); // Remove invalid character
+      event.target.value = input.slice(0, -1); 
     }
   });
-  
 
   document.getElementById('residencePhone').addEventListener('input', function (event) {
     const input = event.target.value;
-    const isValid = /^\d{0,10}$/.test(input); // Only allow up to 10 digits
+    const isValid = /^\d{0,10}$/.test(input); 
     if (!isValid) {
-      event.target.value = input.slice(0, -1); // Remove invalid character
+      event.target.value = input.slice(0, -1); 
     }
   });
+  document.getElementById('pinCodeInput').addEventListener('input', function (event) {
+    const input = event.target.value;
+    const isValid = /^\d{0,6}$/.test(input); 
+    if (!isValid) {
+      event.target.value = input.slice(0, -1); 
+    }
+  });
+  document.getElementById('stdCodeInput').addEventListener('input', function (event) {
+    const input = event.target.value;
+    const isValid = /^\d{0,10}$/.test(input); 
+    if (!isValid) {
+      event.target.value = input.slice(0, -1); 
+    }
+  });
+  
 
+
+    function toggleFields() {
+      const ownerType = document.getElementById('ownerType').value;
+      const corporateNameField = document.getElementById('corporateName');
+      const titleField = document.getElementById('title');
+      const firstNameField = document.getElementById('firstName');
+      const lastNameField = document.getElementById('lastName');
+      const fatherFirstNameField = document.getElementById('fatherFirstName');
+      const fatherMiddleNameField = document.getElementById('fatherMiddleName');
+      const fatherLastNameField = document.getElementById('fatherLastName');
+      const genderField = document.getElementById('gender');
+      const occupationClass = document.getElementById('occupationClass');
+      const dateOfBirth = document.getElementById('dateInput');
+      
+      const disableFields = ownerType === 'organization';
+
+      dateOfBirth.disabled = disableFields;
+      occupationClass.disabled = disableFields;
+      corporateNameField.disabled = disableFields;
+      titleField.disabled = disableFields;
+      firstNameField.disabled = disableFields;
+      lastNameField.disabled = disableFields;
+      fatherFirstNameField.disabled = disableFields;
+      fatherMiddleNameField.disabled = disableFields;
+      fatherLastNameField.disabled = disableFields;
+      genderField.disabled = disableFields;
+    }
+  
+
+    function updateGender() {
+        const title = document.getElementById('title').value;
+        const genderField = document.getElementById('gender');
+  
+        genderField.value = title === 'Mr' ? 'Male' : title === 'Mrs' || title === 'Miss' ? 'Female' : 'Select';
+      }
+
+      function toggleCountryField() {
+        const isNRI = document.getElementById('nriYes').checked;
+        const countryRow = document.getElementById('countryRow');
+        countryRow.style.display = isNRI ? 'table-row' : 'none';
+      }
   
   
+      function calculateAge() {
+        const dateInput = document.getElementById('dateInput').value;
+        const ageField = document.getElementById('age');
+        
+        if (!dateInput) return; 
+        
+        const dob = new Date(dateInput);
+        const today = new Date();
+        let age = today.getFullYear() - dob.getFullYear();
+        const monthDifference = today.getMonth() - dob.getMonth();
+        const dayDifference = today.getDate() - dob.getDate();
+      
+        
+        if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
+          age--;
+        }
+      
+        ageField.value = age;
+      
+        
+        if (age < 18) {
+          alert("To take Insurance age should be greater than 18");
+        }
+      }
+
+      
+      // Country state selection
+
+      const countryStateMap = {
+        
+        india: ["Maharashtra", "Karnataka", "UP", "Delhi"],
+        thailand: ["Chiang Mai","Chumphon","Chonburi","Kalasin"],
+        malaysia: ["Johor","Kedah","Kelantan","Kuala Lumpur"],
+        brazil: ["Acre","Amazonas","Amapa","Alagoas"],
+      };
+      
+      // Function to update the states dropdown based on the selected country
+      function updateStates() {
+        const country = document.getElementById('countryId').value;
+        const stateSelect = document.getElementById('stateId');
+        
+        // Clear the current state options
+        stateSelect.innerHTML = '<option value="">Select State</option>';
+      
+        // If the country is selected and states are available for that country
+        if (countryStateMap[country]) {
+          const states = countryStateMap[country];
+          states.forEach(state => {
+            const option = document.createElement("option");
+            option.value = state.toLowerCase().replace(/\s+/g, ''); // to create unique option values (e.g. "karnataka")
+            option.textContent = state;
+            stateSelect.appendChild(option);
+          });
+        }
+      }
+      
