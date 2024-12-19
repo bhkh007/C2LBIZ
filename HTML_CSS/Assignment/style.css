@@ -17,12 +17,13 @@ body {
   }
 
   .container {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 20px auto;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    width: fit-content;
   }
 
   .form-section {
@@ -145,10 +146,7 @@ body {
     align-items: center;
     padding: 10px;
     z-index: 1000; 
-  }
-  
-
-  
+  }  
 
   #welcomeSpan{
     font-size: 25px;
@@ -162,3 +160,53 @@ body {
   .addressHeader{
     background-color:#06a0e7;
   }
+
+.partyFormButtons{
+  gap: 0;
+}
+
+
+
+
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+#navBarButtons {
+  display: flex;
+  overflow-x: auto;
+  background-color: #ffffff;
+  padding: 10px;
+}
+#navBarButtons button {
+  border: none;
+  background-color: #ff9100; 
+  color: white;
+  padding: 5px 9px;
+  margin-right: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+}
+#navBarButtons button:hover {
+  background-color: #003f7f;
+}
+#navBarButtons button:active {
+  background-color: #002b5c; 
+}
+#navBarButtons button:last-child {
+  margin-right: 0;
+}
+
+#navBarButtons::-webkit-scrollbar {
+  height: 6px;
+}
+#navBarButtons::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+#navBarButtons::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
