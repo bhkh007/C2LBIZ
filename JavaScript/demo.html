@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Party Details Form</title>
+  <style>
+    .container {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .table td {
+      padding: 10px;
+    }
+    .form-section h3 {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-section">
+      <h3>Party Details</h3>
+      <table class="table">
+        <tbody>
+          <tr>
+            <td><label for="ownerType">Owner Type</label></td>
+            <td>
+              <select id="ownerType" onchange="toggleFields()">
+                <option value="">Select</option>
+                <option value="personal">Personal</option>
+                <option value="organization">Organization</option>
+              </select>
+            </td>
+            <td><label for="corporateName">Corporate Name</label></td>
+            <td><input type="text" id="corporateName" style="width: 125px;"></td>
+          </tr>
+          <tr>
+            <td><label for="title">Title</label></td>
+            <td>
+              <select id="title" onchange="updateGender()">
+                <option value="Mr">Mr</option>
+                <option value="Mrs">Mrs</option>
+                <option value="Miss">Miss</option>
+              </select>
+            </td>
+            <td><label for="firstName">First Name</label></td>
+            <td><input type="text" id="firstName" style="width: 125px;"></td>
+            <td><label for="lastName">Last Name</label></td>
+            <td><input type="text" id="lastName" style="width: 125px;"></td>
+          </tr>
+          <tr>
+            <td><label for="fatherFirstName">Father's First Name</label></td>
+            <td><input type="text" id="fatherFirstName" style="width: 125px;"></td>
+            <td><label for="fatherMiddleName">Father's Middle Name</label></td>
+            <td><input type="text" id="fatherMiddleName" style="width: 125px;"></td>
+            <td><label for="fatherLastName">Father's Last Name</label></td>
+            <td><input type="text" id="fatherLastName" style="width: 125px;"></td>
+          </tr>
+          <tr>
+            <td><label for="dateInput">Date</label></td>
+            <td><input type="date" id="dateInput" style="width: 125px;"></td>
+            <td><label for="age">Age</label></td>
+            <td><input type="text" id="age" style="width: 125px;"></td>
+            <td><label for="gender">Gender</label></td>
+            <td>
+              <select id="gender">
+                <option value="Select">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><label for="nonResident">Non-Resident (NRI)</label></td>
+            <td>
+              <input type="radio" id="nriYes" name="nonResident" value="Yes" onclick="toggleCountryField()">
+              <label for="nriYes">Yes</label>
+              <input type="radio" id="nriNo" name="nonResident" value="No" onclick="toggleCountryField()">
+              <label for="nriNo">No</label>
+            </td>
+          </tr>
+          <tr id="countryRow" style="display: none;">
+            <td><label for="country">Current Country of Residence</label></td>
+            <td><input type="text" id="country" style="width: 125px;"></td>
+          </tr>
+          <tr>
+            <td><label for="occupationClass">Occupation Class</label></td>
+            <td><input type="text" id="occupationClass" style="width: 125px;"></td>
+            <td><label for="clientStatus">Client Status</label></td>
+            <td>
+              <select id="clientStatus">
+                <option value="Select">Select</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><label for="birthPlace">Birth Place</label></td>
+            <td><input type="text" id="birthPlace" style="width: 125px;"></td>
+            <td><label for="qualification">Qualification</label></td>
+            <td><input type="text" id="qualification" style="width: 125px;"></td>
+          </tr>
+          <tr>
+            <td><label for="sports">Sports</label></td>
+            <td><input type="text" id="sports" style="width: 125px;"></td>
+            <td><label for="degree">Degree</label></td>
+            <td>
+              <select id="degree">
+                <option value="Select">Select</option>
+                <option value="BE">BE</option>
+                <option value="BTech">BTech</option>
+                <option value="BSc">BSc</option>
+                <option value="BPharm">BPharm</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function toggleFields() {
+      const ownerType = document.getElementById('ownerType').value;
+      const corporateNameField = document.getElementById('corporateName');
+      const titleField = document.getElementById('title');
+      const firstNameField = document.getElementById('firstName');
+      const lastNameField = document.getElementById('lastName');
+      const fatherFirstNameField = document.getElementById('fatherFirstName');
+      const fatherMiddleNameField = document.getElementById('fatherMiddleName');
+      const fatherLastNameField = document.getElementById('fatherLastName');
+      const genderField = document.getElementById('gender');
+
+      const disableFields = ownerType === 'organization';
+
+      corporateNameField.disabled = !disableFields;
+      titleField.disabled = disableFields;
+      firstNameField.disabled = disableFields;
+      lastNameField.disabled = disableFields;
+      fatherFirstNameField.disabled = disableFields;
+      fatherMiddleNameField.disabled = disableFields;
+      fatherLastNameField.disabled = disableFields;
+      genderField.disabled = disableFields;
+    }
+
+    function toggleCountryField() {
+      const isNRI = document.getElementById('nriYes').checked;
+      const countryRow = document.getElementById('countryRow');
+      countryRow.style.display = isNRI ? 'table-row' : 'none';
+    }
+
+    function updateGender() {
+      const title = document.getElementById('title').value;
+      const genderField = document.getElementById('gender');
+
+      genderField.value = title === 'Mr' ? 'Male' : title === 'Mrs' || title === 'Miss' ? 'Female' : 'Select';
+
+
+
+
+// Country state selection
+const countryStateMap = {
+    india: ["Maharashtra", "Karnataka", "UP", "Delhi"],
+    thailand: ["Chiang Mai", "Chumphon", "Chonburi", "Kalasin"],
+    malaysia: ["Johor", "Kedah", "Kelantan", "Kuala Lumpur"],
+    brazil: ["Acre", "Amazonas", "Amapa", "Alagoas"],
+};
+
+function updateStates(countrySelect) {
+    const country = countrySelect.value;
+    const stateSelect = countrySelect.closest('tr').querySelector('select[id^="stateId"]'); // Find the corresponding state dropdown in the same row
+    
+    // Clear the current state options
+    stateSelect.innerHTML = '<option value="">Select State</option>';
+
+    // If the country is selected and states are available for that country
+    if (countryStateMap[country]) {
+        const states = countryStateMap[country];
+        states.forEach(state => {
+            const option = document.createElement("option");
+            option.value = state.toLowerCase().replace(/\s+/g, ''); // to create unique option values (e.g. "karnataka")
+            option.textContent = state;
+            stateSelect.appendChild(option);
+        });
+    }
+}
+
+function addRow() {
+    const table = document.getElementById('addressTable').getElementsByTagName('tbody')[0];
+    const newRow = table.rows[0].cloneNode(true);
+    
+    // Ensure each row has a unique identifier
+    const newIndex = table.rows.length + 1;
+    
+    newRow.querySelectorAll('input').forEach(input => {
+        input.value = '';
+        if (input.type === 'checkbox') input.checked = false;
+        if (input.type === 'radio') input.checked = false;
+    });
+
+    // Update IDs to be unique for each row
+    const countrySelect = newRow.querySelector('select#countryId');
+    countrySelect.id = 'countryId' + newIndex;
+    
+    const stateSelect = newRow.querySelector('select#stateId');
+    stateSelect.id = 'stateId' + newIndex;
+
+    // Clear the state select options initially
+    stateSelect.innerHTML = '<option value="">Select State</option>';
+
+    // Bind the updateStates function to the new country select element
+    countrySelect.addEventListener('change', function() {
+        updateStates(this);
+    });
+
+    // Reset delete checkbox and action button
+    const deleteCheckboxCell = newRow.cells[6];
+    deleteCheckboxCell.innerHTML = '<input type="checkbox" onclick="deleteRow(this)">';
+
+    const actionCell = newRow.cells[7];
+    actionCell.innerHTML = '<button type="button" onclick="addRow()">Add</button>';
+
+    // Append the new row to the table
+    table.appendChild(newRow);
+    
+    // Trigger updateStates for the newly added row to ensure states are updated based on selected country
+    updateStates(countrySelect);
+}
+
+function deleteRow(button) {
+    const row = button.closest('tr'); // Get the closest row
+    const table = row.parentNode;
+
+    // Ensure at least one row remains
+    if (table.rows.length > 1) {
+        table.removeChild(row);
+    } else {
+        alert("Cannot delete the last remaining row.");
+    }
+}
+
+
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navigation Bar</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  
+</body>
+</html>
